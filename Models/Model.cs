@@ -13,5 +13,6 @@ namespace Vega.Models
 
         [Required(ErrorMessage="Field make is required.")]
         public int MakeId { get; set; }
+        public Make Make { get; set; }
     }
 }
