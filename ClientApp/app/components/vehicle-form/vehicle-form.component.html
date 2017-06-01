@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="row">
+        <h1>New Vehicle</h1>
+        <hr />
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="make" class="control-label col-md-2">Make</label>
+                <div class="col-md-5">
+                    <select id="make" class="form-control" (change)="onMakeChange()" [(ngModel)]="vehicle.make" name="make">
+                        <option value=""></option>
+                        <option *ngFor="let m of makes" value="{{m.id}}">{{m.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="model" class="control-label col-md-2">Model</label>
+                <div class="col-md-5">
+                    <select id="model" class="form-control">
+                        <option value=""></option>
+                        <option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="model" class="control-label col-md-2">Features</label>
+                <div class="col-md-5">
+                    <div *ngFor="let f of features" class="checkbox">
+                        <label for="feature{{ f.id }}">
+                            <input type="checkbox" id="feature{{ f.id }}"  value="{{ f.id}}"> {{f.name}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
