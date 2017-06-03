@@ -1,6 +1,6 @@
-namespace Vega.ViewModels
+namespace Vega.Controllers.Resources
 {
-    public class ModelViewModel
+    public class KeyValuePairResource
     {
         public int Id { get; set; }
         public string Name { get; set; }

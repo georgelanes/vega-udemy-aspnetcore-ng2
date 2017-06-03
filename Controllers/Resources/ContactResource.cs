@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Vega.ViewModels
+namespace Vega.Controllers.Resources
 {
-    public class ContactViewModel{
+    public class ContactResource
+    {
+
         [Required (ErrorMessage="Contact name is required.")]
         [StringLength(255)]
         public string  Name { get; set; }

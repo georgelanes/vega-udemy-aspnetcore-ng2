@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using Vega.Models;
+using Vega.Core.Models;
 
-namespace Vega.ViewModels
+namespace Vega.Controllers.Resources
 {
 
-    public class VehicleViewModel
+    public class SaveVehicleResource
     {
         public int Id { get; set; }
 
@@ -15,11 +15,11 @@ namespace Vega.ViewModels
         public bool IsRegistered { get; set; }
 
         [Required(ErrorMessage="Contact is required")]
-        public ContactViewModel Contact { get; set; }
+        public ContactResource Contact { get; set; }
 
         public ICollection<int> Features { get; set; }
 
-       public VehicleViewModel()
+       public SaveVehicleResource()
        {
            Features = new Collection<int>();
        }
