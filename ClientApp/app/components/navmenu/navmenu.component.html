@@ -17,8 +17,8 @@
                         <span class='glyphicon glyphicon-home'></span> Home
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/vehicles/new']">
+                <li [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{extract: true}">
+                    <a [routerLink]="['/vehicles']">
                         <span class='glyphicon glyphicon-education'></span> Vehicles
                     </a>
                 </li>

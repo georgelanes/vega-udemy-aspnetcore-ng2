@@ -11,6 +11,7 @@ namespace Vega.Controllers.Resources
     {
         public int Id { get; set; }
 
+        public int MakeId { get; set; }
         public int ModelId { get; set; }
         public bool IsRegistered { get; set; }
 

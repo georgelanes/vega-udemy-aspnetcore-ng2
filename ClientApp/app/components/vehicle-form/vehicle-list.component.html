@@ -1,0 +1,61 @@
+<div class="container-fluid">
+    <div class="row">
+        <h1>Vehicles</h1>
+        <p>
+            {{query | json}}
+        </p>
+        <a [routerLink]="['/vehicles/new']" class="btn btn-success">New Vechicle</a>
+        <hr />
+        <div class="well col-md-12">
+            <div class="col-md-5">
+                <div class="form-group ">
+                    <label for="make">Make</label>
+                    <select name="makeId" id="make" class="form-control" [(ngModel)]="query.makeId" (change)="onFilterChange()">
+                        <option value=""></option>
+                        <option *ngFor="let m of makes" value="{{m.id}}">{{m.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group ">
+                    <label for="model">Model</label>
+                    <select name="modelId" id="model" class="form-control" [(ngModel)]="query.modelId" (change)="onFilterChange()">
+                            <option value=""></option>
+                            <option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
+                        </select>
+                </div>
+
+            </div>
+            <div class="col-md-2" style="padding-top:25px;">
+                <div class="form-group">
+                    <label></label>
+                    <button type="button" class="btn btn-default" (click)="resetFilter()">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-condensed table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th *ngFor="let c of columns" >
+                        <div *ngIf="c.isSortable" (click)="sortBy(c.key)">
+                            {{c.title}}
+                            <i *ngIf="query.sortBy === c.key" class="fa" [class.fa-sort-asc]="query.isSortAscending"  [class.fa-sort-desc]="!query.isSortAscending"></i>
+                        </div>
+                        <div *ngIf="!c.isSortable">{{c.title}}</div>
+                    </th>
+                    <th style="width:90px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of vehicles">
+                    <td>{{item.id}}</td>
+                    <td>{{item.make.name}}</td>
+                    <td>{{item.model.name}}</td>
+                    <td>{{item.contact.name}}</td>
+                    <td class="text-center"><a [routerLink]="['/vehicles/', item.id]" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> </a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Vega.Core.Models;
 
@@ -10,5 +11,6 @@ namespace Vega.Core
          void Update(Vehicle vehicle);
          void Remove(int id);
          Task<Vehicle> Find(int id);
+         Task<IEnumerable<Vehicle>> GetAllAsync(VehicleQuery queryObj);
     }
 }

@@ -1,53 +1,77 @@
 <div class="container-fluid">
     <div class="row">
         <h1>New Vehicle</h1>
+        <p>
+            {{vehicle | json}}
+        </p>
         <hr />
-        <form class="form-vertical" role="form">
+        <form #f="ngForm" class="form-vertical" role="form" (ngSubmit)="submit()" novalidate>
             <div class="form-group">
                 <label for="make" class="control-label">Make</label>
-                <select id="make" class="form-control" (change)="onMakeChange()" [(ngModel)]="vehicle.make" name="make">
+                <select id="make" class="form-control" (change)="onMakeChange()" [(ngModel)]="vehicle.makeId" name="makeId" required #make="ngModel">
                         <option value=""></option>
                         <option *ngFor="let m of makes" value="{{m.id}}">{{m.name}}</option>
                 </select>
+                <div class="alert alert-danger" *ngIf="make.touched && !make.valid">
+                    Please specify the make.
+                </div>
             </div>
             <div class="form-group">
                 <label for="model" class="control-label">Model</label>
-                <select id="model" class="form-control">
+                <select id="model" class="form-control" [(ngModel)]="vehicle.modelId" name="modelId" required #model="ngModel">
                         <option value=""></option>
                         <option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
                     </select>
+                <div class="alert alert-danger" *ngIf="model.touched && !model.valid">
+                    Please specify the model.
+                </div>
             </div>
             <div class="form-group">
                 <p class="control-label">Is the vehicle registered?</p>
                 <label for="registered">
-                    <input type="radio" class="checkbox-inline" name="isregistered" id="registered" value="true"> Yes
+                    <input type="radio" class="checkbox-inline" name="isregistered" id="registered" [value]="true" [(ngModel)]="vehicle.isRegistered" > Yes
                 </label>
                 <label for="notregistered">
-                    <input type="radio" class="checkbox-inline" name="isregistered" id="notregistered" value="false"> No
+                    <input type="radio" class="checkbox-inline" name="isregistered" id="notregistered" [value]="false"  [(ngModel)]="vehicle.isRegistered"> No
                 </label>
             </div>
             <h2 class="">Features </h2>
             <div class="form-group">
                 <div *ngFor="let f of features" class="checkbox">
                     <label for="feature{{ f.id }}">
-                            <input type="checkbox" id="feature{{ f.id }}"  value="{{ f.id}}"> {{f.name}}
+                            <input type="checkbox" id="feature{{ f.id }}"  value="{{ f.id}}" (change)="onFeatureToggle(f.id,$event)" [checked]="vehicle.features.includes(f.id)"> {{f.name}}
                         </label>
                 </div>
             </div>
             <h2 class="">Contact </h2>
             <div class="form-group">
                 <label for="contactName" class="control-label">Name</label>
-                <input type="text" id="contactName" class="form-control">
+                <input type="text" id="contactName" name="contactName" class="form-control" [(ngModel)]="vehicle.contact.name" required #contactName="ngModel">
+                <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">
+                    Please specify the contact name.
+                </div>                
             </div>
             <div class="form-group">
                 <label for="contactPhone" class="control-label">Phone</label>
-                <input type="text" id="contactPhone" class="form-control">
+                <input type="text" id="contactPhone" name="contactPhone" class="form-control" [(ngModel)]="vehicle.contact.phone" required
+                    #contactPhone="ngModel">
+                <div class="alert alert-danger" *ngIf="contactPhone.touched && !contactPhone.valid">
+                    Please specify the contact phone.
+                </div>                      
             </div>
             <div class="form-group">
                 <label for="contactEmail" class="control-label">Email</label>
-                <input type="email" id="contactEmail" class="form-control">
+                <input type="email" id="contactEmail" name="contactEmail" class="form-control" [(ngModel)]="vehicle.contact.email" required
+                    #contactEmail="ngModel">
+                <div class="alert alert-danger" *ngIf="contactEmail.touched && !contactEmail.valid">
+                    Please specify the contact email.
+                </div>                      
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" >Save</button>
+                <button *ngIf="vehicle.id" type="submit" class="btn btn-danger" type="button" (click)="delete()">Delete</button>
+                <a [routerLink]="'/vehicles'" class="btn btn-default">back to list</a>
+            </div>
         </form>
     </div>
 </div>

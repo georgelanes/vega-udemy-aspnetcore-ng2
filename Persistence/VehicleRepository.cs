@@ -3,6 +3,10 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vega.Core.Models;
 using Vega.Core;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Vega.Extensions;
 
 namespace Vega.Persistence
 {
@@ -13,6 +17,38 @@ namespace Vega.Persistence
         {
             this._context = context;
         }
+
+        public async Task<IEnumerable<Vehicle>> GetAllAsync(VehicleQuery queryObj)
+        {
+            var query = _context.Vehicles
+                .Include(v => v.Model)
+                    .ThenInclude(m => m.Make)
+                .Include(v => v.Features)
+                    .ThenInclude(vf => vf.Feature).AsQueryable();
+
+            if (queryObj.MakeId.HasValue)
+                query = query.Where(v => v.Model.MakeId == queryObj.MakeId.Value);
+
+            if (queryObj.ModelId.HasValue)
+                query = query.Where(v => v.Model.Id == queryObj.ModelId.Value);
+
+
+            var collumnsMap = new Dictionary<string, Expression<Func<Vehicle, object>>>()
+            {
+                ["make"] = v => v.Model.Make.name,
+                ["model"] = v => v.Model.name,
+                ["contactName"] = v => v.ContactName
+            };
+
+            query = query.ApplyOrdering(queryObj, collumnsMap);
+
+            query = query.ApplyPagging(queryObj);
+
+            return await query.ToListAsync();
+
+        }
+
+        
 
         public void Add(Vehicle vehicle)
         {
@@ -25,12 +61,13 @@ namespace Vega.Persistence
             return await _context.Vehicles.FindAsync(id);
         }
 
-        public async Task<Vehicle> GetVehicle(int id){
+        public async Task<Vehicle> GetVehicle(int id)
+        {
             return await _context.Vehicles
                 .Include(f => f.Features)
-                    .ThenInclude(vf=>vf.Feature)
-                .Include(v=>v.Model)
-                    .ThenInclude(m=>m.Make)
+                    .ThenInclude(vf => vf.Feature)
+                .Include(v => v.Model)
+                    .ThenInclude(m => m.Make)
                 .SingleOrDefaultAsync(v => v.Id == id);
         }
 
@@ -47,6 +84,6 @@ namespace Vega.Persistence
 
         }
 
-    
+
     }
 }
