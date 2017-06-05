@@ -11,6 +11,6 @@ namespace Vega.Core
          void Update(Vehicle vehicle);
          void Remove(int id);
          Task<Vehicle> Find(int id);
-         Task<IEnumerable<Vehicle>> GetAllAsync(VehicleQuery queryObj);
+         Task<QueryResult<Vehicle>> GetAllAsync(VehicleQuery queryObj);
     }
 }

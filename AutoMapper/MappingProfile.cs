@@ -10,6 +10,8 @@ namespace Vega.AutoMapper
     public class MappingProfile : Profile
     {
         public MappingProfile(){
+            
+            CreateMap(typeof(QueryResult<>),typeof(QueryResultResource<>));
 
             CreateMap<Make,MakeResource>();
             CreateMap<MakeResource,Make>();
