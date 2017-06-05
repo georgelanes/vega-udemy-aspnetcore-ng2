@@ -10,6 +10,7 @@ import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { VehicleListComponent } from './components/vehicle-form/vehicle-list.component';
+import { ViewVehiculeComponent } from './components/view-vehicle/view-vehicle';
 import { PaginationComponent } from './components/shared/pagination.component';
 
 
@@ -25,7 +26,8 @@ export const sharedConfig: NgModule = {
         HomeComponent,
         PaginationComponent,
         VehicleFormComponent,
-        VehicleListComponent
+        VehicleListComponent,
+        ViewVehiculeComponent
     ],
     imports: [
         FormsModule, ReactiveFormsModule,
